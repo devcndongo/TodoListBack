@@ -27,4 +27,5 @@ public class AuthServiceImpl implements AuthService {
         userDTO.setName(createdUser.getName());
         return userDTO;
     }
+
 }

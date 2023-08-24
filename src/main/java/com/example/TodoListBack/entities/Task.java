@@ -1,6 +1,7 @@
 package com.example.TodoListBack.entities;
 
 import com.example.TodoListBack.entities.Enum.Categorie;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -25,11 +26,11 @@ public class Task {
     private Date debut;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date fin;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-    private Date deadlines;
+
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties("tasks")
     private User user;
 
     public Task() {

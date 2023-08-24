@@ -2,6 +2,8 @@ package com.example.TodoListBack.controllers;
 
 import com.example.TodoListBack.dto.AuthenticationDTO;
 import com.example.TodoListBack.dto.AuthenticationResponse;
+import com.example.TodoListBack.entities.User;
+import com.example.TodoListBack.repositories.UserRepository;
 import com.example.TodoListBack.services.jwt.UserDetailsServiceImpl;
 import com.example.TodoListBack.util.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,6 +32,9 @@ public class AuthenticationController {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @PostMapping("/authenticate")
     public AuthenticationResponse createAuthenticationToken(@RequestBody AuthenticationDTO authenticationDTO, HttpServletResponse response) throws BadCredentialsException, DisabledException, UsernameNotFoundException, IOException {
         try {
@@ -42,9 +47,7 @@ public class AuthenticationController {
         }
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationDTO.getEmail());
-
         final String jwt = jwtUtil.generateToken(userDetails.getUsername());
-
         return new AuthenticationResponse(jwt);
 
     }
